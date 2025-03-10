@@ -6,6 +6,7 @@ services:
     container_name: mysql_auth_api
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: authdb
     ports:
       - "3306:3306"
     volumes:
@@ -16,12 +17,12 @@ services:
     build: .
     container_name: auth_api
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/authdb?allowPublicKeyRetrieval=true&useSSL=false
     ports:
       - "8080:8080"
+    restart: on-failure
 
 volumes:
   mysql_data:

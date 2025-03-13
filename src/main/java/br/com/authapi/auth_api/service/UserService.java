@@ -37,22 +37,8 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepo.findByUsername(username);
-    }
-
     public Optional<User> findByEmail(String email) {
         return userRepo.findByEmail(email);
-    }
-
-
-    public boolean authenticate(String username, String rawPassword) {
-        Optional<User> userOpt = userRepo.findByUsername(username);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            return passwordEncoder.matches(rawPassword, user.getPassword());
-        }
-        return false;
     }
 
 }
